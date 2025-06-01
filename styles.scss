@@ -1,0 +1,114 @@
+
+body{
+    background: #21193E;
+    color: white;
+}
+
+
+#splash{
+    height: 90vh;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 48px;
+
+    .mast{
+        h1{
+            font-family: "ivypresto-headline", serif;
+            font-size: 80px;
+            font-weight: 500;
+            text-shadow: -1px 0 0 white;
+            margin: 0;
+        }
+        h2{
+            font-family: "ivypresto-text", sans-serif;
+            font-size: 22px;
+            font-weight: 100;
+            letter-spacing: -.6px;
+            margin: 0;
+            color: rgba(white, .5);
+        }
+    }
+
+    .input{
+        background: white;
+        padding: 10px;
+        border-radius: 24px;
+    }
+}
+
+
+.sec{
+    text-align: center;
+
+    .header{
+        h1{
+            font-family: "ivypresto-headline", serif;
+            font-size: 40px;
+            font-weight: 500;
+            //text-shadow: -.25px 0 0 white;
+            margin: 0;
+            margin-bottom: 8px;
+        }
+        h2{
+            font-family: "ivypresto-text", sans-serif;
+            font-size: 18px;
+            font-weight: 100;
+            letter-spacing: -.4px;
+            margin: 0;
+            color: rgba(white, .5);
+        }
+    }
+
+    .carousel{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 48px;
+
+        margin: 60px auto;
+        width: 100%;
+        max-width: 1000px;
+
+        .card{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+
+            .banner{
+                width: 100%;
+                aspect-ratio: 4/5;
+                background: rgba(white, .05);
+                border-radius: 12px;
+            }
+
+            .expo{
+                h1{
+                    font-family: "ivypresto-headline", serif;
+                    font-size: 28px;
+                    font-weight: 500;
+                    letter-spacing: .4px;
+                    //text-shadow: -.25px 0 0 white;
+                    margin: 0;
+                    margin-bottom: 8px;
+                }
+                p{
+                    font-family: "ivypresto-text", sans-serif;
+                    font-size: 16px;
+                    font-weight: 100;
+                    letter-spacing: -.4px;
+                    margin: 0;
+                    color: rgba(white, .5);
+                }
+            }
+
+        }
+    }
+}
+

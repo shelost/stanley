@@ -1,0 +1,93 @@
+body {
+  background: #21193E;
+  color: white;
+}
+
+#splash {
+  height: 90vh;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 48px;
+}
+#splash .mast h1 {
+  font-family: "ivypresto-headline", serif;
+  font-size: 80px;
+  font-weight: 500;
+  text-shadow: -1px 0 0 white;
+  margin: 0;
+}
+#splash .mast h2 {
+  font-family: "ivypresto-text", sans-serif;
+  font-size: 22px;
+  font-weight: 100;
+  letter-spacing: -0.6px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+#splash .input {
+  background: white;
+  padding: 10px;
+  border-radius: 24px;
+}
+
+.sec {
+  text-align: center;
+}
+.sec .header h1 {
+  font-family: "ivypresto-headline", serif;
+  font-size: 40px;
+  font-weight: 500;
+  margin: 0;
+  margin-bottom: 8px;
+}
+.sec .header h2 {
+  font-family: "ivypresto-text", sans-serif;
+  font-size: 18px;
+  font-weight: 100;
+  letter-spacing: -0.4px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+.sec .carousel {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 48px;
+  margin: 60px auto;
+  width: 100%;
+  max-width: 1000px;
+}
+.sec .carousel .card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+.sec .carousel .card .banner {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+.sec .carousel .card .expo h1 {
+  font-family: "ivypresto-headline", serif;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  margin: 0;
+  margin-bottom: 8px;
+}
+.sec .carousel .card .expo p {
+  font-family: "ivypresto-text", sans-serif;
+  font-size: 16px;
+  font-weight: 100;
+  letter-spacing: -0.4px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+}/*# sourceMappingURL=styles.css.map */
