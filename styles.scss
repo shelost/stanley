@@ -471,7 +471,9 @@ body{
         }
 
         &.signup{
+            width: 80vw;
             .input{
+                box-sizing: border-box;
                 width: 80vw;
             }
         }

@@ -400,7 +400,11 @@ body {
   .sec .carousel .card {
     width: 100%;
   }
+  .sec.signup {
+    width: 80vw;
+  }
   .sec.signup .input {
+    box-sizing: border-box;
     width: 80vw;
   }
   .content {
