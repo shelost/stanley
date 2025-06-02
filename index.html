@@ -137,101 +137,96 @@
 </div>
 
     <script>
-        // Intersection Observer for floating animations
         const observerOptions = {
             threshold: 0.15,
             rootMargin: '20px 0px 20px 0px'
         };
 
-        // Check for session uniqueness
-        const sessionId = sessionStorage.getItem('animationSessionId');
-        const currentSessionId = sessionId || Date.now().toString();
+        const ANIMATION_DURATION = 800; // 0.8s, ensure this matches your CSS animation duration
+        const GRACE_PERIOD = 200; // 0.2s, additional time before locking the animation state
 
-        // Set the session ID if it's new
-        if (!sessionId) {
-            sessionStorage.setItem('animationSessionId', currentSessionId);
+        function getAnimationSessionId() {
+            let sessionId = sessionStorage.getItem('animationSessionId');
+            if (!sessionId) {
+                sessionId = Date.now().toString();
+                sessionStorage.setItem('animationSessionId', sessionId);
+            }
+            return sessionId;
         }
+
+        const currentSessionId = getAnimationSessionId();
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                const elementId = entry.target.id || `el-${Math.random().toString(36).substr(2, 9)}`;
-
-                // If element doesn't have an ID, assign one so we can track it
-                if (!entry.target.id) {
+                let elementId = entry.target.id;
+                if (!elementId) {
+                    // Generate a temporary, somewhat unique ID if none exists.
+                    // For consistent behavior across refreshes, elements should have stable IDs in HTML.
+                    elementId = `el-${Math.random().toString(36).substr(2, 9)}-${entry.target.tagName}`;
                     entry.target.id = elementId;
                 }
 
-                // Get the storage key for this element in this session
                 const storageKey = `animated-${elementId}-${currentSessionId}`;
+                const hasAnimatedThisSession = sessionStorage.getItem(storageKey) === 'true';
 
-                // Check if this element was already animated in this session
-                const hasAnimated = sessionStorage.getItem(storageKey) === 'true';
-
-                // Only animate if element is intersecting AND hasn't been animated in this session
-                if (entry.isIntersecting && !hasAnimated) {
-                    // Mark as animated in sessionStorage for this session
+                if (entry.isIntersecting && !hasAnimatedThisSession) {
                     sessionStorage.setItem(storageKey, 'true');
-
-                    // Also mark it with a data attribute for this page view
-                    entry.target.setAttribute('data-animated', 'true');
-
-                    // Stop observing to prevent re-triggering
+                    entry.target.setAttribute('data-animated', 'true'); // For current page view logic
                     observer.unobserve(entry.target);
 
-                    const delay = entry.target.getAttribute('data-delay') || 0;
+                    const delay = parseInt(entry.target.getAttribute('data-delay') || 0);
 
-                    // Apply animation class after the delay
                     setTimeout(() => {
                         entry.target.classList.add('float-in');
-                    }, parseInt(delay));
-                } else if (hasAnimated) {
-                    // If already animated in this session, immediately show without animation
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'none';
+                        // After animation duration + grace period, add previously-animated class
+                        setTimeout(() => {
+                            entry.target.classList.add('previously-animated');
+                        }, ANIMATION_DURATION + GRACE_PERIOD);
+                    }, delay);
 
-                    // Add class for any styling that depends on animation completion
-                    entry.target.classList.add('float-in');
-                    entry.target.classList.add('previously-animated');
-
-                    // Stop observing
+                } else if (hasAnimatedThisSession && entry.target.classList.contains('float-in')) {
+                    // This case handles elements that were animated, then scrolled out, then back in,
+                    // and ensures their previously-animated state is locked if the full timeout above didn't run (e.g. due to quick scroll away)
+                    // Or, if the element was already shown as previously-animated on DOMContentLoaded but somehow got re-observed.
+                    if (!entry.target.classList.contains('previously-animated')){
+                         entry.target.classList.add('previously-animated');
+                    }
                     observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        // Observe all elements with data-float attribute
         document.addEventListener('DOMContentLoaded', () => {
-            // First, check for previously animated elements and set them to visible immediately
             const floatElements = document.querySelectorAll('[data-float]');
 
             floatElements.forEach(el => {
-                const elementId = el.id || `el-${Math.random().toString(36).substr(2, 9)}`;
-                if (!el.id) {
+                let elementId = el.id;
+                if (!elementId) {
+                    // Ensure consistent ID generation for elements without one.
+                    elementId = `el-${Math.random().toString(36).substr(2, 9)}-${el.tagName}`;
                     el.id = elementId;
                 }
 
                 const storageKey = `animated-${elementId}-${currentSessionId}`;
-                const wasAnimated = sessionStorage.getItem(storageKey) === 'true';
+                const wasAnimatedThisSession = sessionStorage.getItem(storageKey) === 'true';
 
-                // If this element was animated in the current session, make it visible immediately
-                if (wasAnimated) {
-                    el.style.opacity = '1';
-                    el.style.transform = 'none';
-                    el.classList.add('float-in');
-                    el.classList.add('previously-animated');
+                if (wasAnimatedThisSession) {
+                    el.classList.add('previously-animated'); // Applies animation:none and final styles
+                    el.classList.add('float-in'); // Ensure it's in the "visible" state according to animation logic
+                    el.setAttribute('data-animated', 'true'); // Mark for current page view consistency
                 } else {
-                    // Otherwise, observe it for animation
                     observer.observe(el);
                 }
 
-                // Pre-compute element dimensions to prevent layout shifts
                 if (el.classList.contains('banner') || el.querySelector('.banner')) {
-                    el.style.minHeight = el.offsetHeight + 'px';
+                    // Ensure space is reserved for banner elements to prevent layout shifts
+                    if(el.offsetHeight > 0) { // only set if height is already computed
+                         el.style.minHeight = el.offsetHeight + 'px';
+                    }
                 }
             });
         });
 
-        // Prevent animation jank during window resize
         let resizeTimer;
         window.addEventListener('resize', () => {
             document.body.classList.add('resize-animation-stopper');
@@ -241,7 +236,6 @@
             }, 400);
         });
 
-        // Disable hover effects during scrolling to prevent animation conflicts
         let scrollTimer;
         window.addEventListener('scroll', () => {
             clearTimeout(scrollTimer);
@@ -250,7 +244,7 @@
             }
 
             if (window.scrollY > 300){
-                document.body.style.backgroundColor = '#060422';
+                document.body.style.backgroundColor = '#09081a';
             } else {
                 document.body.style.backgroundColor = '#140f26';
             }
@@ -260,14 +254,6 @@
             }, 150);
         }, { passive: true });
 
-        // Clear sessionStorage when user completely closes the browser
-        // This is optional - uncomment if you want animations to reset on browser restart
-        // window.addEventListener('beforeunload', () => {
-        //     // Only clear if it's a tab close, not a refresh
-        //     if (performance.navigation.type !== 1) {
-        //         sessionStorage.removeItem('animationSessionId');
-        //     }
-        // });
     </script>
 
 </body>

@@ -167,6 +167,8 @@ body {
 .sec .carousel .card .banner,
 .sec .carousel .card lottie-player.banner {
   width: 100%;
+  aspect-ratio: 4/5;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   box-shadow: -8px 36px 48px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -244,7 +246,7 @@ body {
 }
 
 .footer {
-  background: #060422;
+  background: #09081a;
   padding: 20px 0 28px 0;
   text-align: center;
   border-radius: 18px 18px 0 0;
@@ -313,22 +315,19 @@ body {
 }
 [data-float].float-in {
   opacity: 1;
-  transform: translateY(0);
   animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 [data-float].float-in[data-float=fade-left] {
-  transform: translateX(0);
   animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 [data-float].float-in[data-float=fade-right] {
-  transform: translateX(0);
   animation: fadeInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 [data-float].previously-animated {
   animation: none !important;
   transition: none !important;
-  opacity: 1;
-  transform: none;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 #stanley {

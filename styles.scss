@@ -187,6 +187,8 @@ body{
             .banner,
             lottie-player.banner {
                 width: 100%;
+                aspect-ratio: 4/5;
+                background: rgba(white, .05);
                 border-radius: 12px;
                 box-shadow: -8px 36px 48px rgba(black, .1);
                 overflow: hidden;
@@ -275,7 +277,7 @@ body{
 }
 
 .footer{
-    background: #060422;
+    background: #09081a;
     padding: 20px 0 28px 0;
     text-align: center;
     border-radius: 18px 18px 0 0;
@@ -339,10 +341,7 @@ body{
     transform: translateY(30px);
     will-change: transform, opacity;
     backface-visibility: hidden;
-
-    // Content-visibility improves rendering performance
     content-visibility: auto;
-    // Create containing block to avoid layout shifts
     contain: layout paint style;
 
     &[data-float="fade-left"] {
@@ -356,27 +355,23 @@ body{
     // Animation classes applied via JavaScript
     &.float-in {
         opacity: 1;
-        transform: translateY(0);
         animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 
         &[data-float="fade-left"] {
-            transform: translateX(0);
             animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
 
         &[data-float="fade-right"] {
-            transform: translateX(0);
             animation: fadeInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
     }
 
-    // Elements that were previously animated in this session
+    // Class added after animation completes + grace period, or on load if already animated in session
     &.previously-animated {
-        // Skip animation, just show in final state
         animation: none !important;
         transition: none !important;
-        opacity: 1;
-        transform: none;
+        opacity: 1 !important;
+        transform: none !important;
     }
 }
 
