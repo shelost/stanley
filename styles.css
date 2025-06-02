@@ -388,7 +388,7 @@ body {
   .sec .header h1 {
     font-size: 48px;
     line-height: 90%;
-    margin-bottom: 18px;
+    padding-bottom: 18px;
   }
   .sec .carousel {
     flex-direction: column;
