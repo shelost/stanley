@@ -1,17 +1,20 @@
 body{
     background: #120e22;
-    color: white;
+    color: #030025;
     margin: 0;
 
 }
 
+$stan: #6355FF;
+$text: #030025;
+
 ::selection{
-    background: white;
-    color: black;
+    background: $stan;
+    color: white;
 }
 
 #main{
-    background: #140f26;
+    background: white;
 }
 
 
@@ -35,27 +38,31 @@ body{
         h1{
             font-family: "ivypresto-headline", serif;
             font-size: 80px;
-            font-weight: 500;
-            letter-spacing: -.5px;
+            font-weight: 550;
+            letter-spacing: -1.8px;
             // /text-shadow: -1px 0 0 white;
             margin: 0;
             margin-bottom: 8px;
 
-            background: -webkit-linear-gradient(white 50%, rgba(white, .5));
+            background: -webkit-linear-gradient($text 50%, rgba($text, .5));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         h2{
-            font-family: "ivypresto-text", sans-serif;
-            font-size: 20px;
-            font-weight: 100;
-            letter-spacing: -.6px;
+            font-family: 'Geist', sans-serif;
+            font-size: 18px;
+            font-weight: 350;
+            letter-spacing: -.55px;
             margin: 0;
-            color: rgba(white, .4);
+            color: rgba($text, .4);
 
-            background: -webkit-linear-gradient(rgba(white, .8) 50%, rgba(white, .5));
+            background: -webkit-linear-gradient(rgba($text, .8) 50%, rgba($text, .5));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+
+            b{
+                font-weight: 600;
+            }
 
         }
     }
@@ -70,20 +77,21 @@ body{
     width: 480px;
     display: flex;
     margin: 0 auto;
-    box-shadow: inset -2px -2px 4px rgba(black, .05), inset 2px 2px 4px rgba(white, .02),  -8px 36px 48px rgba(black, .15);
+    border: 1.5px solid rgba($stan, .3);
+    box-shadow: inset -2px -2px 4px rgba(black, .03), inset 2px 2px 4px rgba(white, .02),  -2px 24px 24px rgba($stan, .05);
 
     input{
         border: none;
         background: none;
         flex: 1;
-        color: white;
+        color: $text;
         padding: 4px 16px;
         font-family: "Inter", sans-serif;
         font-size: 15px;
-        font-weight: 350;
-        letter-spacing: -.3px;
+        font-weight: 450;
+        letter-spacing: -.4px;
         &::placeholder{
-            color: rgba(white, .3);
+            color: rgba($text, .3);
         }
         &:focus{
             outline: none;
@@ -96,11 +104,11 @@ body{
         color: white;
         font-family: "Inter", sans-serif;
         font-size: 15px;
-        font-weight: 450;
-        letter-spacing: -.3px;
+        font-weight: 500;
+        letter-spacing: -.2px;
         border-radius: 48px;
         padding: 11px 15px 12px 18px;
-        box-shadow: inset -2px -2px 4px rgba(black, .25), inset 2px 2px 4px rgba(white, .15);
+        box-shadow: inset -2px -2px 4px rgba(black, .1), inset 2px 2px 4px rgba(white, .15),  -4px 12px 24px rgba($text, .2);
         cursor: pointer;
         transition: .2s ease;
 
@@ -122,19 +130,20 @@ body{
 .sec{
     text-align: center;
     width: 100%;
-    max-width: 1000px;
-    margin: 120px auto;
-    filter: drop-shadow(-24px 48px 48px rgba(black, .25));
+    max-width: 1200px;
+    padding: 0 100px;
+    box-sizing: border-box;
+    margin: 60px auto;
+    overflow: visible;
+   // filter: drop-shadow(-24px 24px 48px rgba(black, .2));
 
     &.signup{
-        // /height: 300px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         gap: 0px;
-
-        padding: 40px 0 80px 0;
+        overflow: visible;
 
         .input{
             margin-top: 40px;
@@ -143,27 +152,32 @@ body{
     }
 
     .header{
+        padding: 40px 0 80px 0;
         h1{
             font-family: "ivypresto-headline", serif;
             font-size: 44px;
-            font-weight: 500;
+            font-weight: 600;
+            letter-spacing: -.5px;
             //text-shadow: -.25px 0 0 white;
             margin: 0;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
 
-            background: -webkit-linear-gradient(white 60%, rgba(white, .4));
+            background: -webkit-linear-gradient($text 60%, rgba($text, .4));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         h2{
-            font-family: "ivypresto-text", sans-serif;
+            font-family: "Geist", sans-serif;
             font-size: 16px;
-            font-weight: 100;
-            letter-spacing: -.25px;
+            font-weight: 300;
+            letter-spacing: -.3px;
             margin: 0 auto;
-            color: rgba(white, .5);
+            color: rgba($text, .6);
             width: 440px;
             max-width: 100%;
+            b{
+                font-weight: 550;
+            }
         }
     }
 
@@ -182,15 +196,16 @@ body{
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 32px;
+            gap: 18px;
+            filter: drop-shadow(-12px 12px 24px rgba($text, .25));
 
             .banner,
             dotlottie-player.banner {
                 width: 100%;
                 aspect-ratio: .85;
                 border-radius: 12px;
-                box-shadow: -8px 36px 48px rgba(black, .1);
                 overflow: hidden;
+
             }
 
             .expo{
@@ -198,20 +213,23 @@ body{
                 h1{
                     font-family: "ivypresto-headline", serif;
                     font-size: 28px;
-                    font-weight: 500;
-                    letter-spacing: .4px;
+                    font-weight: 550;
+                    letter-spacing: 0px;
                     //text-shadow: -.25px 0 0 white;
                     margin: 0;
                     margin-bottom: 8px;
-                    color: rgba(white, .8);
+                    color: rgba($text, .8);
                 }
                 p{
-                    font-family: "ivypresto-text", sans-serif;
-                    font-size: 16px;
-                    font-weight: 100;
-                    letter-spacing: -.4px;
+                    font-family: "Geist", sans-serif;
+                    font-size: 15px;
+                    font-weight: 300;
+                    letter-spacing: -.25px;
                     margin: 0;
-                    color: rgba(white, .4);
+                    color: rgba($text, .6);
+                    b{
+                        font-weight: 600;
+                    }
                 }
             }
 
@@ -222,8 +240,9 @@ body{
 .content{
     display: flex;
     width: 100%;
-    margin: 80px auto;
+    margin: 24px auto;
     gap: 40px;
+    overflow: visible;
 
 
     #linkedin{
@@ -232,6 +251,8 @@ body{
         aspect-ratio: .95;
         max-width: 45%;
         height: fit-content;
+        overflow: visible;
+        filter: drop-shadow(28px 18px 24px rgba($text, .08));
     }
 
     .letter{
@@ -241,22 +262,23 @@ body{
         flex-direction: column;
         gap: 18px;
 
+
         p{
-            font-family: "ivypresto-text", sans-serif;
+            font-family: "Geist", sans-serif;
             font-size: 15px;
-            font-weight: 100;
-            letter-spacing: -.1px;
+            font-weight: 350;
+            letter-spacing: -.25px;
             width: 100%;
             text-align: left;
             margin: 0;
-            color: rgba(white, .75);
-
+            color: rgba($text, .75);
         }
 
         #signature{
             height: 100px;
             margin: 0;
             margin-top: 20px;
+            filter: invert(100%);
         }
     }
 }
@@ -264,30 +286,29 @@ body{
 .pfp{
     display: flex;
     margin-top: -36px;
+    overflow: visible;
     img{
         border-radius: 50px;
         height: 54px;
         border: 1px solid white;
-        box-shadow: -24px 12px 24px rgba(black, .2);
     }
     #v{
         margin-left: -12px;
-        box-shadow: -24px 12px 24px rgba(black, .4);
     }
 }
 
 .footer{
-    background: #09081a;
+    background: #f2f1ff;
     padding: 20px 0 28px 0;
     text-align: center;
     border-radius: 18px 18px 0 0;
     p{
         font-family: "ivypresto-text", sans-serif;
         font-size: 14px;
-        font-weight: 100;
-        letter-spacing: -.2px;
+        font-weight: 300;
+        letter-spacing: -.4px;
         margin: 0;
-        color: rgba(white, .4);
+        color: rgba($text, .8);
     }
 }
 

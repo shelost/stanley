@@ -1,21 +1,21 @@
 body {
   background: #120e22;
-  color: white;
+  color: #030025;
   margin: 0;
 }
 
 ::-moz-selection {
-  background: white;
-  color: black;
+  background: #6355FF;
+  color: white;
 }
 
 ::selection {
-  background: white;
-  color: black;
+  background: #6355FF;
+  color: white;
 }
 
 #main {
-  background: #140f26;
+  background: white;
 }
 
 #splash {
@@ -35,24 +35,27 @@ body {
 #splash .mast h1 {
   font-family: "ivypresto-headline", serif;
   font-size: 80px;
-  font-weight: 500;
-  letter-spacing: -0.5px;
+  font-weight: 550;
+  letter-spacing: -1.8px;
   margin: 0;
   margin-bottom: 8px;
-  background: -webkit-linear-gradient(white 50%, rgba(255, 255, 255, 0.5));
+  background: -webkit-linear-gradient(#030025 50%, rgba(3, 0, 37, 0.5));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 #splash .mast h2 {
-  font-family: "ivypresto-text", sans-serif;
-  font-size: 20px;
-  font-weight: 100;
-  letter-spacing: -0.6px;
+  font-family: "Geist", sans-serif;
+  font-size: 18px;
+  font-weight: 350;
+  letter-spacing: -0.55px;
   margin: 0;
-  color: rgba(255, 255, 255, 0.4);
-  background: -webkit-linear-gradient(rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.5));
+  color: rgba(3, 0, 37, 0.4);
+  background: -webkit-linear-gradient(rgba(3, 0, 37, 0.8) 50%, rgba(3, 0, 37, 0.5));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+#splash .mast h2 b {
+  font-weight: 600;
 }
 
 .input {
@@ -62,24 +65,25 @@ body {
   width: 480px;
   display: flex;
   margin: 0 auto;
-  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.05), inset 2px 2px 4px rgba(255, 255, 255, 0.02), -8px 36px 48px rgba(0, 0, 0, 0.15);
+  border: 1.5px solid rgba(99, 85, 255, 0.3);
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.03), inset 2px 2px 4px rgba(255, 255, 255, 0.02), -2px 24px 24px rgba(99, 85, 255, 0.05);
 }
 .input input {
   border: none;
   background: none;
   flex: 1;
-  color: white;
+  color: #030025;
   padding: 4px 16px;
   font-family: "Inter", sans-serif;
   font-size: 15px;
-  font-weight: 350;
-  letter-spacing: -0.3px;
+  font-weight: 450;
+  letter-spacing: -0.4px;
 }
 .input input::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(3, 0, 37, 0.3);
 }
 .input input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(3, 0, 37, 0.3);
 }
 .input input:focus {
   outline: none;
@@ -90,11 +94,11 @@ body {
   color: white;
   font-family: "Inter", sans-serif;
   font-size: 15px;
-  font-weight: 450;
-  letter-spacing: -0.3px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
   border-radius: 48px;
   padding: 11px 15px 12px 18px;
-  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.25), inset 2px 2px 4px rgba(255, 255, 255, 0.15);
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.1), inset 2px 2px 4px rgba(255, 255, 255, 0.15), -4px 12px 24px rgba(3, 0, 37, 0.2);
   cursor: pointer;
   transition: 0.2s ease;
   display: flex;
@@ -113,9 +117,11 @@ body {
 .sec {
   text-align: center;
   width: 100%;
-  max-width: 1000px;
-  margin: 120px auto;
-  filter: drop-shadow(-24px 48px 48px rgba(0, 0, 0, 0.25));
+  max-width: 1200px;
+  padding: 0 100px;
+  box-sizing: border-box;
+  margin: 60px auto;
+  overflow: visible;
 }
 .sec.signup {
   display: flex;
@@ -123,31 +129,38 @@ body {
   justify-content: center;
   align-items: center;
   gap: 0px;
-  padding: 40px 0 80px 0;
+  overflow: visible;
 }
 .sec.signup .input {
   margin-top: 40px;
   width: 400px;
 }
+.sec .header {
+  padding: 40px 0 80px 0;
+}
 .sec .header h1 {
   font-family: "ivypresto-headline", serif;
   font-size: 44px;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: -0.5px;
   margin: 0;
-  margin-bottom: 8px;
-  background: -webkit-linear-gradient(white 60%, rgba(255, 255, 255, 0.4));
+  margin-bottom: 12px;
+  background: -webkit-linear-gradient(#030025 60%, rgba(3, 0, 37, 0.4));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .sec .header h2 {
-  font-family: "ivypresto-text", sans-serif;
+  font-family: "Geist", sans-serif;
   font-size: 16px;
-  font-weight: 100;
-  letter-spacing: -0.25px;
+  font-weight: 300;
+  letter-spacing: -0.3px;
   margin: 0 auto;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(3, 0, 37, 0.6);
   width: 440px;
   max-width: 100%;
+}
+.sec .header h2 b {
+  font-weight: 550;
 }
 .sec .carousel {
   display: flex;
@@ -162,14 +175,14 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 32px;
+  gap: 18px;
+  filter: drop-shadow(-12px 12px 24px rgba(3, 0, 37, 0.25));
 }
 .sec .carousel .card .banner,
 .sec .carousel .card dotlottie-player.banner {
   width: 100%;
   aspect-ratio: 0.85;
   border-radius: 12px;
-  box-shadow: -8px 36px 48px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 .sec .carousel .card .expo {
@@ -178,26 +191,30 @@ body {
 .sec .carousel .card .expo h1 {
   font-family: "ivypresto-headline", serif;
   font-size: 28px;
-  font-weight: 500;
-  letter-spacing: 0.4px;
+  font-weight: 550;
+  letter-spacing: 0px;
   margin: 0;
   margin-bottom: 8px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(3, 0, 37, 0.8);
 }
 .sec .carousel .card .expo p {
-  font-family: "ivypresto-text", sans-serif;
-  font-size: 16px;
-  font-weight: 100;
-  letter-spacing: -0.4px;
+  font-family: "Geist", sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: -0.25px;
   margin: 0;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(3, 0, 37, 0.6);
+}
+.sec .carousel .card .expo p b {
+  font-weight: 600;
 }
 
 .content {
   display: flex;
   width: 100%;
-  margin: 80px auto;
+  margin: 24px auto;
   gap: 40px;
+  overflow: visible;
 }
 .content #linkedin {
   flex: 1;
@@ -206,6 +223,8 @@ body {
   max-width: 45%;
   height: -moz-fit-content;
   height: fit-content;
+  overflow: visible;
+  filter: drop-shadow(28px 18px 24px rgba(3, 0, 37, 0.08));
 }
 .content .letter {
   flex: 1;
@@ -215,38 +234,38 @@ body {
   gap: 18px;
 }
 .content .letter p {
-  font-family: "ivypresto-text", sans-serif;
+  font-family: "Geist", sans-serif;
   font-size: 15px;
-  font-weight: 100;
-  letter-spacing: -0.1px;
+  font-weight: 350;
+  letter-spacing: -0.25px;
   width: 100%;
   text-align: left;
   margin: 0;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(3, 0, 37, 0.75);
 }
 .content .letter #signature {
   height: 100px;
   margin: 0;
   margin-top: 20px;
+  filter: invert(100%);
 }
 
 .pfp {
   display: flex;
   margin-top: -36px;
+  overflow: visible;
 }
 .pfp img {
   border-radius: 50px;
   height: 54px;
   border: 1px solid white;
-  box-shadow: -24px 12px 24px rgba(0, 0, 0, 0.2);
 }
 .pfp #v {
   margin-left: -12px;
-  box-shadow: -24px 12px 24px rgba(0, 0, 0, 0.4);
 }
 
 .footer {
-  background: #09081a;
+  background: #f2f1ff;
   padding: 20px 0 28px 0;
   text-align: center;
   border-radius: 18px 18px 0 0;
@@ -254,10 +273,10 @@ body {
 .footer p {
   font-family: "ivypresto-text", sans-serif;
   font-size: 14px;
-  font-weight: 100;
-  letter-spacing: -0.2px;
+  font-weight: 300;
+  letter-spacing: -0.4px;
   margin: 0;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(3, 0, 37, 0.8);
 }
 
 /* Animation Styles */
