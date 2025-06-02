@@ -1,7 +1,8 @@
 
 body{
-    background: #21193E;
+    background: #19132f;
     color: white;
+    margin: 0;
 }
 
 
@@ -14,40 +15,102 @@ body{
     align-items: center;
     text-align: center;
     gap: 48px;
+    box-sizing: border-box;
+    padding-bottom: 40px;
+
 
     .mast{
+        img{
+            height: 180px;
+        }
         h1{
             font-family: "ivypresto-headline", serif;
             font-size: 80px;
             font-weight: 500;
-            text-shadow: -1px 0 0 white;
+            letter-spacing: -.5px;
+            // /text-shadow: -1px 0 0 white;
             margin: 0;
+            margin-bottom: 8px;
         }
         h2{
             font-family: "ivypresto-text", sans-serif;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 100;
             letter-spacing: -.6px;
             margin: 0;
-            color: rgba(white, .5);
+            color: rgba(white, .4);
         }
     }
 
-    .input{
-        background: white;
-        padding: 10px;
-        border-radius: 24px;
+
+}
+
+.input{
+    background: rgba(white, .05);
+    padding: 6px;
+    border-radius: 48px;
+    width: 480px;
+    display: flex;
+    box-shadow: -8px 36px 48px rgba(black, .3);
+    margin: 0 auto;
+
+    input{
+        border: none;
+        background: none;
+        flex: 1;
+        color: white;
+        padding: 4px 12px;
+        font-family: "Inter", sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        letter-spacing: -.4px;
+        &::placeholder{
+            color: rgba(white, .3);
+        }
+        &:focus{
+            outline: none;
+        }
+    }
+
+    button{
+        background: #6355FF;
+        border: none;
+        color: white;
+        font-family: "Inter", sans-serif;
+        font-size: 15px;
+        font-weight: 450;
+        letter-spacing: -.3px;
+        border-radius: 48px;
+        padding: 10px 16px 10px 16px;
     }
 }
 
-
 .sec{
     text-align: center;
+    width: 100%;
+    max-width: 1080px;
+    margin: 120px auto;
+    filter: drop-shadow(-4px 6px 12px rgba(black, .5));
+
+    &.signup{
+        // /height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0px;
+
+        padding: 40px 0 80px 0;
+
+        .input{
+            margin-top: 40px;
+        }
+    }
 
     .header{
         h1{
             font-family: "ivypresto-headline", serif;
-            font-size: 40px;
+            font-size: 44px;
             font-weight: 500;
             //text-shadow: -.25px 0 0 white;
             margin: 0;
@@ -55,7 +118,7 @@ body{
         }
         h2{
             font-family: "ivypresto-text", sans-serif;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 100;
             letter-spacing: -.4px;
             margin: 0;
@@ -70,8 +133,7 @@ body{
         gap: 48px;
 
         margin: 60px auto;
-        width: 100%;
-        max-width: 1000px;
+
 
         .card{
             flex: 1;
@@ -86,9 +148,11 @@ body{
                 aspect-ratio: 4/5;
                 background: rgba(white, .05);
                 border-radius: 12px;
+                box-shadow: -8px 36px 48px rgba(black, .3);
             }
 
             .expo{
+                text-align: left;
                 h1{
                     font-family: "ivypresto-headline", serif;
                     font-size: 28px;
@@ -97,6 +161,7 @@ body{
                     //text-shadow: -.25px 0 0 white;
                     margin: 0;
                     margin-bottom: 8px;
+                    color: rgba(white, .8);
                 }
                 p{
                     font-family: "ivypresto-text", sans-serif;
@@ -104,7 +169,7 @@ body{
                     font-weight: 100;
                     letter-spacing: -.4px;
                     margin: 0;
-                    color: rgba(white, .5);
+                    color: rgba(white, .4);
                 }
             }
 
@@ -112,3 +177,122 @@ body{
     }
 }
 
+.content{
+    display: flex;
+    width: 100%;
+    margin: 80px auto;
+    gap: 40px;
+
+
+    #linkedin{
+        flex: 1;
+        width: 500px;
+        max-width: 45%;
+        height: fit-content;
+    }
+
+    .letter{
+        flex: 1;
+        align-items: flex-start;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        p{
+            font-family: "ivypresto-text", sans-serif;
+            font-size: 15px;
+            font-weight: 100;
+            letter-spacing: -.2px;
+            width: 100%;
+            text-align: left;
+            margin: 0;
+            color: rgba(white, .75);
+        }
+
+        #signature{
+            height: 100px;
+            margin: 0;
+            margin-top: 20px;
+        }
+    }
+}
+
+.footer{
+    background: rgba(black, .5);
+    padding: 20px;
+    text-align: center;
+    p{
+        font-family: "ivypresto-text", sans-serif;
+        font-size: 14px;
+        font-weight: 100;
+        letter-spacing: -.2px;
+        margin: 0;
+        color: rgba(white, .4);
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+
+    #splash{
+        .mast{
+            width: 90vw;
+            h1{
+                line-height: 80%;
+                margin-bottom: 18px;
+            }
+        }
+    }
+
+    .sec{
+        width: 80vw;
+
+        .header{
+            h1{
+                line-height: 90%;
+                margin-bottom: 18px;
+            }
+        }
+
+        .carousel{
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+
+            .card{
+                width: 100%;
+
+            }
+        }
+    }
+
+    .content{
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        #linkedin{
+            width: 100vw;
+            max-width: 100%;
+        }
+
+        .letter{
+
+        }
+    }
+
+    .input{
+        width: 80vw;
+        flex-direction: column;
+        border-radius: 24px;
+        gap: 12px;
+        padding: 14px 8px 8px 8px;
+        input{
+            text-align: center;
+        }
+        button{
+            padding: 12px 0;
+        }
+    }
+
+}

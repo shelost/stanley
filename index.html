@@ -9,47 +9,50 @@
     <link rel="stylesheet" href="https://use.typekit.net/kqx0rwr.css">
     <link rel="stylesheet" href="https://use.typekit.net/kqx0rwr.css">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body>
 
 
     <div id = 'splash'>
-        <div class = 'mast'>
+        <div class = 'mast' data-float="fade-up" data-delay="0">
+            <img id = 'stanley' src = 'assets/stanley-fade.png' alt = 'Stanley Logo' />
             <h1> Meet Stanley </h1>
-            <h2> Your creator assistant — fully trained on your content, personalized to you.  </h2>
+            <h2> Your creator assistant — fully trained on your content, personalized to you.  </h2>
         </div>
-        <div class = 'input'>
+        <div class = 'input' data-float="fade-up" data-delay="200">
             <input type="text" placeholder="Your LinkedIn URL...">
             <button> Start Chatting -> </button>
         </div>
     </div>
 
 
-    <div class = 'sec'>
+    <div class = 'sec' data-float="fade-up" data-delay="0">
 
-        <div class = 'header'>
+        <div class = 'header' data-float="fade-up" data-delay="100">
+
             <h1> What Stanley Does </h1>
             <h2>
                 Our guarantee: Stanley will dream up a high-quality content idea <br>
-                that will outperform your average post, at least once per week. <br>
-                Or your money fully back.
+                that will outperform your average post, at least once per week. <br>
+               <i>Or your money fully back.</i>
             </h2>
         </div>
 
         <div class = 'carousel'>
 
-            <div class = 'card'>
-                <div class = 'banner'> </div>
+            <div class = 'card' data-float="fade-up" data-delay="0">
+                <lottie-player src="assets/card-1.json" background="transparent" speed="1" class="banner" loop autoplay></lottie-player>
                 <div class = 'expo'>
                     <h1> Reads Your Content </h1>
                     <p>
-                        Stanley consumes all of your prior content, analyzes your performance data, and writes in your voice to come up with actually good post ideas
+                        Stanley consumes all of your prior content, analyzes your performance data, and writes in your voice to come up with actually good post ideas
                     </p>
                 </div>
             </div>
 
-            <div class = 'card'>
-                <div class = 'banner'> </div>
+            <div class = 'card' data-float="fade-up" data-delay="150">
+                <lottie-player src="assets/card-2.json" background="transparent" speed="1" class="banner" loop autoplay></lottie-player>
                 <div class = 'expo'>
                     <h1> Analyzes Trends </h1>
                     <p>
@@ -58,8 +61,8 @@
                 </div>
             </div>
 
-            <div class = 'card'>
-                <div class = 'banner'> </div>
+            <div class = 'card' data-float="fade-up" data-delay="300">
+                <img src = 'assets/card-3.png' class = 'banner' alt = 'Delivers Daily' />
                 <div class = 'expo'>
                     <h1> Delivers Daily  </h1>
                     <p>
@@ -71,23 +74,115 @@
         </div>
     </div>
 
-    <div class = 'sec'>
+    <div class = 'sec' data-float="fade-up" data-delay="0">
 
-        <div class = 'header'>
+        <div class = 'header' data-float="fade-up" data-delay="100">
             <h1> Why We Made Stanley </h1>
         </div>
 
-    </div>
+        <div class = 'content'>
 
-    <div class = 'sec'>
+            <img src = 'assets/letter.png' id = 'linkedin' alt = 'Letter' data-float="fade-left" data-delay="0" />
 
-        <div class = 'header'>
-            <h1>Stanley can’t wait to meet you. </h1>
-            <h2>Sign up for the beta today. </h2>
+            <div class = 'letter' data-float="fade-right" data-delay="200">
+                <p>
+                    Hi! We're John Hu (@jayhoovy) and Vitalii Dodonov (@vtddnv).
+                </p>
+                <p>
+                    We get maybe 1 to 2 posts out per week, and we always wished we could find a way to focus more on creating, rather than wondering.
+                </p>
+                <p>
+                    So... we decided to solve that for ourselves -- and all of our Creator friends.
+                </p>
+                <p>
+                    Our actual day job is building Stan Store (where we've helped make Creators over $300M) - so we have all the data on what actually leads to you building a high performing Creator business.
+                </p>
+                <p>
+                    We've packaged all of that proprietary data into Stanley, which is our side project we want to build just to help you perform - because we get how hard it is.
+                </p>
+                <p>
+                    Our Promise to You: Stanley is just in beta for right now, and we are going to massively improve it for you over the next 6 months to be the most thought partner you could ask for. This is your chance to get in at the early ground, and help us shape the product to be hand-in-glove perfect for you!
+                </p>
+                <img src = 'assets/signatures.png' id = 'signature' alt = 'Signature' />
+            </div>
         </div>
 
     </div>
 
+    <div class = 'sec signup' data-float="fade-up" data-delay="0">
+
+        <div class = 'header' data-float="fade-up" data-delay="100">
+            <h1>Stanley can't wait to meet you. </h1>
+            <h2>Sign up for the beta today. </h2>
+            <div class = 'input' data-float="fade-up" data-delay="200">
+                <input type="text" placeholder="Your LinkedIn URL...">
+                <button> Start Chatting -> </button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class = 'footer'>
+        <p> Copyright 2025 FindCommunity, Inc. All rights reserved. </p>
+    </div>
+
+    <script>
+        // Intersection Observer for floating animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '20px 0px 20px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Only animate if element is intersecting AND hasn't been marked for animation
+                if (entry.isIntersecting && !entry.target.hasAttribute('data-animated')) {
+                    // Immediately mark as animated to prevent re-triggering
+                    entry.target.setAttribute('data-animated', 'true');
+
+                    // Stop observing immediately to prevent any further triggers
+                    observer.unobserve(entry.target);
+
+                    const delay = entry.target.getAttribute('data-delay') || 0;
+
+                    setTimeout(() => {
+                        entry.target.classList.add('float-in');
+                    }, parseInt(delay));
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with data-float attribute
+        document.addEventListener('DOMContentLoaded', () => {
+            const floatElements = document.querySelectorAll('[data-float]');
+            floatElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Prevent animation jank during window resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            document.body.classList.add('resize-animation-stopper');
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                document.body.classList.remove('resize-animation-stopper');
+            }, 400);
+        });
+
+        // Disable hover effects during scrolling to prevent animation conflicts
+        let scrollTimer;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimer);
+            if (!document.body.classList.contains('disable-hover')) {
+                document.body.classList.add('disable-hover');
+            }
+
+            scrollTimer = setTimeout(() => {
+                document.body.classList.remove('disable-hover');
+            }, 150);
+        }, { passive: true });
+    </script>
 
 </body>
 </html>
