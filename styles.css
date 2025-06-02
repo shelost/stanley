@@ -167,8 +167,6 @@ body {
 .sec .carousel .card .banner,
 .sec .carousel .card lottie-player.banner {
   width: 100%;
-  aspect-ratio: 4/5;
-  background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   box-shadow: -8px 36px 48px rgba(0, 0, 0, 0.1);
   overflow: hidden;
