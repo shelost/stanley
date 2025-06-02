@@ -137,64 +137,57 @@
 </div>
 
     <script>
+        // Store animation state immediately on page load
+        (function() {
+            // Check if this is a new session
+            const isNewSession = !sessionStorage.getItem('stanley_animation_session');
+
+            // If it's a new session, set the session flag
+            if (isNewSession) {
+                sessionStorage.setItem('stanley_animation_session', 'true');
+            } else {
+                // For returning visitors in the same session, immediately
+                // make all elements visible without animation
+                document.documentElement.classList.add('returning-visitor');
+
+                // Apply to any elements that would animate
+                const animatedElements = document.querySelectorAll('[data-float]');
+                animatedElements.forEach(el => {
+                    // Immediately make the element visible without animation
+                    el.style.opacity = '1';
+                    el.style.transform = 'none';
+                    el.setAttribute('data-animated', 'true');
+
+                    // Store in sessionStorage that this element has been animated
+                    const elementId = el.id || `element-${Math.random().toString(36).substr(2, 9)}`;
+                    if (!el.id) el.id = elementId;
+                    sessionStorage.setItem(`animated-${elementId}`, 'true');
+                });
+            }
+        })();
+
         // Intersection Observer for floating animations
         const observerOptions = {
             threshold: 0.15,
-            // Increase rootMargin to trigger animations earlier, avoiding scroll conflicts
-            rootMargin: '40px 0px 40px 0px'
+            rootMargin: '20px 0px 20px 0px'
         };
 
-        // Track if scrolling is happening to avoid animation conflicts
-        let isScrolling = false;
-
-        // Clear animation flags on page load/refresh
-        document.addEventListener('DOMContentLoaded', () => {
-            // Only clear animation flags if the page was refreshed (not initial load)
-            if (performance.navigation && performance.navigation.type === 1) {
-                // Clear all animation flags from sessionStorage
-                Object.keys(sessionStorage).forEach(key => {
-                    if (key.startsWith('animated-')) {
-                        sessionStorage.removeItem(key);
-                    }
-                });
-
-                // Remove data-animated attributes from all elements
-                document.querySelectorAll('[data-animated]').forEach(el => {
-                    el.removeAttribute('data-animated');
-                });
-            }
-        });
-
         const observer = new IntersectionObserver((entries) => {
-            // If currently scrolling, delay processing entries
-            if (isScrolling) {
-                // Process after scrolling ends
-                setTimeout(() => processEntries(entries), 100);
-                return;
-            }
-
-            processEntries(entries);
-        }, observerOptions);
-
-        function processEntries(entries) {
             entries.forEach(entry => {
-                const elementId = entry.target.id || `el-${Math.random().toString(36).substr(2, 9)}`;
-
-                // If element doesn't have an ID, assign one so we can track it
+                // Ensure element has an ID for tracking
+                const elementId = entry.target.id || `element-${Math.random().toString(36).substr(2, 9)}`;
                 if (!entry.target.id) {
                     entry.target.id = elementId;
                 }
 
-                // Check sessionStorage and data-animated attribute
+                // Check both sessionStorage and data attribute to be double-safe
                 const hasAnimated = sessionStorage.getItem(`animated-${elementId}`) === 'true' ||
-                                   entry.target.hasAttribute('data-animated');
+                                  entry.target.hasAttribute('data-animated') ||
+                                  document.documentElement.classList.contains('returning-visitor');
 
                 // Only animate if element is intersecting AND hasn't been animated this session
                 if (entry.isIntersecting && !hasAnimated) {
-                    // Pre-calculate any dimensions to avoid layout shifts during animation
-                    calculateAndSetDimensions(entry.target);
-
-                    // Mark as animated in both DOM and sessionStorage
+                    // Mark as animated in both DOM and sessionStorage for redundancy
                     entry.target.setAttribute('data-animated', 'true');
                     sessionStorage.setItem(`animated-${elementId}`, 'true');
 
@@ -205,62 +198,46 @@
 
                     // Apply animation class after the delay
                     setTimeout(() => {
-                        // If still scrolling, delay the animation
-                        if (isScrolling) {
-                            setTimeout(() => {
-                                entry.target.classList.add('float-in');
-                            }, 50);
-                        } else {
-                            entry.target.classList.add('float-in');
-                        }
+                        entry.target.classList.add('float-in');
                     }, parseInt(delay));
+                } else if (hasAnimated) {
+                    // If already animated, make visible immediately without animation
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'none';
+
+                    // Stop observing since we don't need to animate this element
+                    observer.unobserve(entry.target);
                 }
             });
-        }
-
-        function calculateAndSetDimensions(element) {
-            // For elements with banners or lottie animations, ensure dimensions are set
-            const banners = element.querySelectorAll('.banner, lottie-player');
-            if (banners.length) {
-                banners.forEach(banner => {
-                    if (!banner.style.minHeight) {
-                        // Set min-height to prevent layout shifts
-                        banner.style.minHeight = '200px';
-                    }
-                });
-            }
-
-            // If this element might cause layout shifts, set min-height
-            if (element.clientHeight > 0 && !element.style.minHeight) {
-                element.style.minHeight = `${element.clientHeight}px`;
-            }
-        }
+        }, observerOptions);
 
         // Observe all elements with data-float attribute
         document.addEventListener('DOMContentLoaded', () => {
-            // Check if this is the first page load in this session
-            const isFirstLoad = !sessionStorage.getItem('page-visited');
-
-            // If user is returning to the page in the same session, mark it
-            if (!isFirstLoad) {
-                document.body.classList.add('returning-visitor');
-            } else {
-                // Mark that page has been visited this session
-                sessionStorage.setItem('page-visited', 'true');
-            }
-
-            // For mobile devices, use a lower animation threshold
-            if (window.innerWidth <= 800) {
-                observerOptions.threshold = 0.1;
-            }
-
+            // Pre-calculate animation state for each element
             const floatElements = document.querySelectorAll('[data-float]');
-            floatElements.forEach(el => {
-                // Pre-compute element dimensions before animation starts
-                // to prevent layout shifts
-                calculateAndSetDimensions(el);
 
-                observer.observe(el);
+            floatElements.forEach(el => {
+                // Ensure element has an ID
+                const elementId = el.id || `element-${Math.random().toString(36).substr(2, 9)}`;
+                if (!el.id) el.id = elementId;
+
+                // Check if already animated in this session
+                const hasAnimated = sessionStorage.getItem(`animated-${elementId}`) === 'true' ||
+                                  document.documentElement.classList.contains('returning-visitor');
+
+                if (hasAnimated) {
+                    // If already animated in this session, make visible without animation
+                    el.style.opacity = '1';
+                    el.style.transform = 'none';
+                    el.setAttribute('data-animated', 'true');
+                } else {
+                    // Pre-reserve space for elements to prevent layout shifts
+                    if (el.classList.contains('banner') || el.querySelector('.banner')) {
+                        el.style.minHeight = el.offsetHeight + 'px';
+                    }
+                    // Observe element for animation
+                    observer.observe(el);
+                }
             });
         });
 
@@ -274,49 +251,30 @@
             }, 400);
         });
 
-        // Improved scroll handling to prevent jitter
+        // Disable hover effects during scrolling to prevent animation conflicts
         let scrollTimer;
         window.addEventListener('scroll', () => {
-            // Mark that we're currently scrolling
-            isScrolling = true;
-
-            // Disable hover effects during scrolling
+            clearTimeout(scrollTimer);
             if (!document.body.classList.contains('disable-hover')) {
                 document.body.classList.add('disable-hover');
             }
 
-            // Apply background color change based on scroll position
-            if (window.scrollY > 300) {
+            if (window.scrollY > 300){
                 document.body.style.backgroundColor = '#060422';
             } else {
                 document.body.style.backgroundColor = '#140f26';
             }
 
-            // Clear previous timeout
-            clearTimeout(scrollTimer);
-
-            // Set a new timeout - this will trigger when scrolling stops
             scrollTimer = setTimeout(() => {
-                // Re-enable hover effects
                 document.body.classList.remove('disable-hover');
-
-                // Mark that scrolling has ended
-                isScrolling = false;
             }, 150);
         }, { passive: true });
 
-        // Update page reload detection for modern browsers
-        if (window.performance && performance.getEntriesByType) {
-            const navEntries = performance.getEntriesByType('navigation');
-            if (navEntries.length > 0 && navEntries[0].type === 'reload') {
-                // Clear animation flags on page reload
-                Object.keys(sessionStorage).forEach(key => {
-                    if (key.startsWith('animated-')) {
-                        sessionStorage.removeItem(key);
-                    }
-                });
-            }
-        }
+        // When navigating away, preserve animation state
+        window.addEventListener('beforeunload', () => {
+            // Make sure session flag is set to remember we've animated elements
+            sessionStorage.setItem('stanley_animation_session', 'true');
+        });
     </script>
 
 </body>
