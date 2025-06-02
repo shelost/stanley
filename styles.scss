@@ -284,7 +284,7 @@ $text: #030025;
 }
 
 .pfp{
-    display: flex;
+    display: none;
     margin-top: -36px;
     overflow: visible;
     img{
@@ -462,11 +462,13 @@ $text: #030025;
     }
 
     .sec{
-        width: 80vw;
+        width: 100vw;
+        padding: 0 10vw;
 
         .header{
             width: 100%;
             text-align: center;
+            padding: 20px 0 0px 0;
             h1{
                 font-size: 48px;
                 line-height: 90%;
@@ -486,10 +488,13 @@ $text: #030025;
         }
 
         &.signup{
-            width: 80vw;
+            width: 100vw;
             .input{
                 box-sizing: border-box;
                 width: 80vw;
+            }
+            .header{
+                padding: 0;
             }
         }
     }
@@ -497,7 +502,7 @@ $text: #030025;
     .content{
         flex-direction: column;
         align-items: center;
-        gap: 10px;
+        gap: 24px;
 
         #linkedin{
             width: 100vw;
