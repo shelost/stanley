@@ -96,11 +96,12 @@ body{
         color: white;
         font-family: "Inter", sans-serif;
         font-size: 15px;
-        font-weight: 450;
-        letter-spacing: -.3px;
+        font-weight: 500;
+        letter-spacing: -.15px;
         border-radius: 48px;
         padding: 11px 15px 12px 18px;
         box-shadow: inset -2px -2px 4px rgba(black, .25), inset 2px 2px 4px rgba(white, .15);
+        text-shadow: -1px 10px 20px rgba(black, .2);
         cursor: pointer;
         transition: .2s ease;
 
@@ -365,22 +366,40 @@ body{
             animation: fadeInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
     }
+
+    // Elements that have already been animated
+    &[data-animated="true"] {
+        opacity: 1;
+        transform: none;
+        animation: none !important;
+    }
 }
 
-// For returning visitors, show elements immediately without animation
-.returning-visitor [data-float] {
-    opacity: 1;
-    transform: none;
-    animation: none !important;
+// Completely disable animations for returning visitors
+html.returning-visitor {
+    [data-float] {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+        transition: none !important;
+
+        &.float-in {
+            animation: none !important;
+        }
+    }
 }
 
-// Stanley logo continuous float
+// Stanley logo animation - only apply if not a returning visitor
 #stanley {
     animation: subtleFloat 6s ease-in-out infinite;
+
+    html.returning-visitor & {
+        animation: none !important;
+    }
 }
 
-// Card hover effects
-.card.float-in {
+// Card hover effects - still allow hover effects even for returning visitors
+.card.float-in, .card[data-animated="true"] {
     transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     &:hover {
