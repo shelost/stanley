@@ -339,10 +339,12 @@ body{
     transform: translateY(30px);
     will-change: transform, opacity;
     backface-visibility: hidden;
-    // Content-visibility improves rendering performance
-    content-visibility: auto;
-    // Create containing block to avoid layout shifts
-    contain: layout paint style;
+    // Remove content-visibility and contain properties as they cause scroll jitter
+    // content-visibility: auto;
+    // contain: layout paint style;
+
+    // Add height stability to prevent layout shifts
+    min-height: 0;
 
     &[data-float="fade-left"] {
         transform: translateX(-30px);
@@ -356,6 +358,8 @@ body{
     &.float-in {
         opacity: 1;
         animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        // Add transform-style property to help with 3D rendering
+        transform-style: preserve-3d;
 
         &[data-float="fade-left"] {
             animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
@@ -377,6 +381,8 @@ body{
 // Stanley logo continuous float
 #stanley {
     animation: subtleFloat 6s ease-in-out infinite;
+    // Prevent the animation from causing layout shifts
+    transform-style: preserve-3d;
 }
 
 // Card hover effects
@@ -408,21 +414,28 @@ body{
     [data-float] {
         // Simplify animations on mobile for better performance
         &.float-in {
-            animation-duration: 0.6s;
+            animation-duration: 0.5s; // Even shorter duration for mobile
             animation-timing-function: ease-out;
+            // Use hardware acceleration for mobile animations
+            -webkit-transform: translateZ(0);
         }
     }
 
-    // Prevent animation-related scroll jank on mobile
+    // Enable scroll anchoring but don't use overflow-anchor which can cause issues
     html, body {
-        overflow-anchor: auto;
+        // Explicitly set transform-style for entire document
+        transform-style: flat;
+        // Prevent implicit height changes during animations
+        overflow-x: hidden;
     }
 
-    // Ensure fixed positioning doesn't cause layout issues
+    // Ensure fixed dimensions for banner elements to prevent layout shifts
     .sec .carousel .card .banner,
     .sec .carousel .card lottie-player.banner {
         height: auto;
         min-height: 200px;
+        // Add additional properties to stabilize during animations
+        transform: translateZ(0);
     }
 
     #splash{

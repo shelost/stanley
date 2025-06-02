@@ -302,8 +302,7 @@ body {
   transform: translateY(30px);
   will-change: transform, opacity;
   backface-visibility: hidden;
-  content-visibility: auto;
-  contain: layout paint style;
+  min-height: 0;
 }
 [data-float][data-float=fade-left] {
   transform: translateX(-30px);
@@ -314,6 +313,7 @@ body {
 [data-float].float-in {
   opacity: 1;
   animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  transform-style: preserve-3d;
 }
 [data-float].float-in[data-float=fade-left] {
   animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
@@ -330,6 +330,7 @@ body {
 
 #stanley {
   animation: subtleFloat 6s ease-in-out infinite;
+  transform-style: preserve-3d;
 }
 
 .card.float-in {
@@ -353,16 +354,19 @@ body {
 
 @media screen and (max-width: 800px) {
   [data-float].float-in {
-    animation-duration: 0.6s;
+    animation-duration: 0.5s;
     animation-timing-function: ease-out;
+    -webkit-transform: translateZ(0);
   }
   html, body {
-    overflow-anchor: auto;
+    transform-style: flat;
+    overflow-x: hidden;
   }
   .sec .carousel .card .banner,
   .sec .carousel .card lottie-player.banner {
     height: auto;
     min-height: 200px;
+    transform: translateZ(0);
   }
   #splash {
     padding-bottom: 0px;

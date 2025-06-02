@@ -140,10 +140,43 @@
         // Intersection Observer for floating animations
         const observerOptions = {
             threshold: 0.15,
-            rootMargin: '20px 0px 20px 0px'
+            // Increase rootMargin to trigger animations earlier, avoiding scroll conflicts
+            rootMargin: '40px 0px 40px 0px'
         };
 
+        // Track if scrolling is happening to avoid animation conflicts
+        let isScrolling = false;
+
+        // Clear animation flags on page load/refresh
+        document.addEventListener('DOMContentLoaded', () => {
+            // Only clear animation flags if the page was refreshed (not initial load)
+            if (performance.navigation && performance.navigation.type === 1) {
+                // Clear all animation flags from sessionStorage
+                Object.keys(sessionStorage).forEach(key => {
+                    if (key.startsWith('animated-')) {
+                        sessionStorage.removeItem(key);
+                    }
+                });
+
+                // Remove data-animated attributes from all elements
+                document.querySelectorAll('[data-animated]').forEach(el => {
+                    el.removeAttribute('data-animated');
+                });
+            }
+        });
+
         const observer = new IntersectionObserver((entries) => {
+            // If currently scrolling, delay processing entries
+            if (isScrolling) {
+                // Process after scrolling ends
+                setTimeout(() => processEntries(entries), 100);
+                return;
+            }
+
+            processEntries(entries);
+        }, observerOptions);
+
+        function processEntries(entries) {
             entries.forEach(entry => {
                 const elementId = entry.target.id || `el-${Math.random().toString(36).substr(2, 9)}`;
 
@@ -154,10 +187,13 @@
 
                 // Check sessionStorage and data-animated attribute
                 const hasAnimated = sessionStorage.getItem(`animated-${elementId}`) === 'true' ||
-                                    entry.target.hasAttribute('data-animated');
+                                   entry.target.hasAttribute('data-animated');
 
                 // Only animate if element is intersecting AND hasn't been animated this session
                 if (entry.isIntersecting && !hasAnimated) {
+                    // Pre-calculate any dimensions to avoid layout shifts during animation
+                    calculateAndSetDimensions(entry.target);
+
                     // Mark as animated in both DOM and sessionStorage
                     entry.target.setAttribute('data-animated', 'true');
                     sessionStorage.setItem(`animated-${elementId}`, 'true');
@@ -169,11 +205,36 @@
 
                     // Apply animation class after the delay
                     setTimeout(() => {
-                        entry.target.classList.add('float-in');
+                        // If still scrolling, delay the animation
+                        if (isScrolling) {
+                            setTimeout(() => {
+                                entry.target.classList.add('float-in');
+                            }, 50);
+                        } else {
+                            entry.target.classList.add('float-in');
+                        }
                     }, parseInt(delay));
                 }
             });
-        }, observerOptions);
+        }
+
+        function calculateAndSetDimensions(element) {
+            // For elements with banners or lottie animations, ensure dimensions are set
+            const banners = element.querySelectorAll('.banner, lottie-player');
+            if (banners.length) {
+                banners.forEach(banner => {
+                    if (!banner.style.minHeight) {
+                        // Set min-height to prevent layout shifts
+                        banner.style.minHeight = '200px';
+                    }
+                });
+            }
+
+            // If this element might cause layout shifts, set min-height
+            if (element.clientHeight > 0 && !element.style.minHeight) {
+                element.style.minHeight = `${element.clientHeight}px`;
+            }
+        }
 
         // Observe all elements with data-float attribute
         document.addEventListener('DOMContentLoaded', () => {
@@ -188,14 +249,16 @@
                 sessionStorage.setItem('page-visited', 'true');
             }
 
+            // For mobile devices, use a lower animation threshold
+            if (window.innerWidth <= 800) {
+                observerOptions.threshold = 0.1;
+            }
+
             const floatElements = document.querySelectorAll('[data-float]');
             floatElements.forEach(el => {
                 // Pre-compute element dimensions before animation starts
                 // to prevent layout shifts
-                if (el.classList.contains('banner') || el.querySelector('.banner')) {
-                    // Reserve space for banners
-                    el.style.minHeight = el.offsetHeight + 'px';
-                }
+                calculateAndSetDimensions(el);
 
                 observer.observe(el);
             });
@@ -211,30 +274,49 @@
             }, 400);
         });
 
-        // Disable hover effects during scrolling to prevent animation conflicts
+        // Improved scroll handling to prevent jitter
         let scrollTimer;
         window.addEventListener('scroll', () => {
-            clearTimeout(scrollTimer);
+            // Mark that we're currently scrolling
+            isScrolling = true;
+
+            // Disable hover effects during scrolling
             if (!document.body.classList.contains('disable-hover')) {
                 document.body.classList.add('disable-hover');
             }
 
-            if (window.scrollY > 300){
+            // Apply background color change based on scroll position
+            if (window.scrollY > 300) {
                 document.body.style.backgroundColor = '#060422';
             } else {
                 document.body.style.backgroundColor = '#140f26';
             }
 
+            // Clear previous timeout
+            clearTimeout(scrollTimer);
+
+            // Set a new timeout - this will trigger when scrolling stops
             scrollTimer = setTimeout(() => {
+                // Re-enable hover effects
                 document.body.classList.remove('disable-hover');
+
+                // Mark that scrolling has ended
+                isScrolling = false;
             }, 150);
         }, { passive: true });
 
-        // Clear animation sessionStorage when user leaves the site
-        window.addEventListener('beforeunload', () => {
-            // Uncomment the next line if you want animations to play again on a new session
-            // Array.from(sessionStorage).forEach(key => key.startsWith('animated-') && sessionStorage.removeItem(key));
-        });
+        // Update page reload detection for modern browsers
+        if (window.performance && performance.getEntriesByType) {
+            const navEntries = performance.getEntriesByType('navigation');
+            if (navEntries.length > 0 && navEntries[0].type === 'reload') {
+                // Clear animation flags on page reload
+                Object.keys(sessionStorage).forEach(key => {
+                    if (key.startsWith('animated-')) {
+                        sessionStorage.removeItem(key);
+                    }
+                });
+            }
+        }
     </script>
 
 </body>
