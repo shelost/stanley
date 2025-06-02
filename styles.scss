@@ -96,12 +96,11 @@ body{
         color: white;
         font-family: "Inter", sans-serif;
         font-size: 15px;
-        font-weight: 500;
-        letter-spacing: -.15px;
+        font-weight: 450;
+        letter-spacing: -.3px;
         border-radius: 48px;
         padding: 11px 15px 12px 18px;
         box-shadow: inset -2px -2px 4px rgba(black, .25), inset 2px 2px 4px rgba(white, .15);
-        text-shadow: -1px 10px 20px rgba(black, .2);
         cursor: pointer;
         transition: .2s ease;
 
@@ -340,6 +339,7 @@ body{
     transform: translateY(30px);
     will-change: transform, opacity;
     backface-visibility: hidden;
+
     // Content-visibility improves rendering performance
     content-visibility: auto;
     // Create containing block to avoid layout shifts
@@ -356,50 +356,37 @@ body{
     // Animation classes applied via JavaScript
     &.float-in {
         opacity: 1;
+        transform: translateY(0);
         animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 
         &[data-float="fade-left"] {
+            transform: translateX(0);
             animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
 
         &[data-float="fade-right"] {
+            transform: translateX(0);
             animation: fadeInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
     }
 
-    // Elements that have already been animated
-    &[data-animated="true"] {
-        opacity: 1;
-        transform: none;
-        animation: none !important;
-    }
-}
-
-// Completely disable animations for returning visitors
-html.returning-visitor {
-    [data-float] {
-        opacity: 1 !important;
-        transform: none !important;
+    // Elements that were previously animated in this session
+    &.previously-animated {
+        // Skip animation, just show in final state
         animation: none !important;
         transition: none !important;
-
-        &.float-in {
-            animation: none !important;
-        }
+        opacity: 1;
+        transform: none;
     }
 }
 
-// Stanley logo animation - only apply if not a returning visitor
+// Stanley logo continuous float - this animation is independent of session
 #stanley {
     animation: subtleFloat 6s ease-in-out infinite;
-
-    html.returning-visitor & {
-        animation: none !important;
-    }
 }
 
-// Card hover effects - still allow hover effects even for returning visitors
-.card.float-in, .card[data-animated="true"] {
+// Card hover effects
+.card.float-in {
     transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     &:hover {

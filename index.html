@@ -137,61 +137,45 @@
 </div>
 
     <script>
-        // Store animation state immediately on page load
-        (function() {
-            // Check if this is a new session
-            const isNewSession = !sessionStorage.getItem('stanley_animation_session');
-
-            // If it's a new session, set the session flag
-            if (isNewSession) {
-                sessionStorage.setItem('stanley_animation_session', 'true');
-            } else {
-                // For returning visitors in the same session, immediately
-                // make all elements visible without animation
-                document.documentElement.classList.add('returning-visitor');
-
-                // Apply to any elements that would animate
-                const animatedElements = document.querySelectorAll('[data-float]');
-                animatedElements.forEach(el => {
-                    // Immediately make the element visible without animation
-                    el.style.opacity = '1';
-                    el.style.transform = 'none';
-                    el.setAttribute('data-animated', 'true');
-
-                    // Store in sessionStorage that this element has been animated
-                    const elementId = el.id || `element-${Math.random().toString(36).substr(2, 9)}`;
-                    if (!el.id) el.id = elementId;
-                    sessionStorage.setItem(`animated-${elementId}`, 'true');
-                });
-            }
-        })();
-
         // Intersection Observer for floating animations
         const observerOptions = {
             threshold: 0.15,
             rootMargin: '20px 0px 20px 0px'
         };
 
+        // Check for session uniqueness
+        const sessionId = sessionStorage.getItem('animationSessionId');
+        const currentSessionId = sessionId || Date.now().toString();
+
+        // Set the session ID if it's new
+        if (!sessionId) {
+            sessionStorage.setItem('animationSessionId', currentSessionId);
+        }
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // Ensure element has an ID for tracking
-                const elementId = entry.target.id || `element-${Math.random().toString(36).substr(2, 9)}`;
+                const elementId = entry.target.id || `el-${Math.random().toString(36).substr(2, 9)}`;
+
+                // If element doesn't have an ID, assign one so we can track it
                 if (!entry.target.id) {
                     entry.target.id = elementId;
                 }
 
-                // Check both sessionStorage and data attribute to be double-safe
-                const hasAnimated = sessionStorage.getItem(`animated-${elementId}`) === 'true' ||
-                                  entry.target.hasAttribute('data-animated') ||
-                                  document.documentElement.classList.contains('returning-visitor');
+                // Get the storage key for this element in this session
+                const storageKey = `animated-${elementId}-${currentSessionId}`;
 
-                // Only animate if element is intersecting AND hasn't been animated this session
+                // Check if this element was already animated in this session
+                const hasAnimated = sessionStorage.getItem(storageKey) === 'true';
+
+                // Only animate if element is intersecting AND hasn't been animated in this session
                 if (entry.isIntersecting && !hasAnimated) {
-                    // Mark as animated in both DOM and sessionStorage for redundancy
-                    entry.target.setAttribute('data-animated', 'true');
-                    sessionStorage.setItem(`animated-${elementId}`, 'true');
+                    // Mark as animated in sessionStorage for this session
+                    sessionStorage.setItem(storageKey, 'true');
 
-                    // Stop observing immediately to prevent re-triggering
+                    // Also mark it with a data attribute for this page view
+                    entry.target.setAttribute('data-animated', 'true');
+
+                    // Stop observing to prevent re-triggering
                     observer.unobserve(entry.target);
 
                     const delay = entry.target.getAttribute('data-delay') || 0;
@@ -201,11 +185,15 @@
                         entry.target.classList.add('float-in');
                     }, parseInt(delay));
                 } else if (hasAnimated) {
-                    // If already animated, make visible immediately without animation
+                    // If already animated in this session, immediately show without animation
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'none';
 
-                    // Stop observing since we don't need to animate this element
+                    // Add class for any styling that depends on animation completion
+                    entry.target.classList.add('float-in');
+                    entry.target.classList.add('previously-animated');
+
+                    // Stop observing
                     observer.unobserve(entry.target);
                 }
             });
@@ -213,30 +201,32 @@
 
         // Observe all elements with data-float attribute
         document.addEventListener('DOMContentLoaded', () => {
-            // Pre-calculate animation state for each element
+            // First, check for previously animated elements and set them to visible immediately
             const floatElements = document.querySelectorAll('[data-float]');
 
             floatElements.forEach(el => {
-                // Ensure element has an ID
-                const elementId = el.id || `element-${Math.random().toString(36).substr(2, 9)}`;
-                if (!el.id) el.id = elementId;
+                const elementId = el.id || `el-${Math.random().toString(36).substr(2, 9)}`;
+                if (!el.id) {
+                    el.id = elementId;
+                }
 
-                // Check if already animated in this session
-                const hasAnimated = sessionStorage.getItem(`animated-${elementId}`) === 'true' ||
-                                  document.documentElement.classList.contains('returning-visitor');
+                const storageKey = `animated-${elementId}-${currentSessionId}`;
+                const wasAnimated = sessionStorage.getItem(storageKey) === 'true';
 
-                if (hasAnimated) {
-                    // If already animated in this session, make visible without animation
+                // If this element was animated in the current session, make it visible immediately
+                if (wasAnimated) {
                     el.style.opacity = '1';
                     el.style.transform = 'none';
-                    el.setAttribute('data-animated', 'true');
+                    el.classList.add('float-in');
+                    el.classList.add('previously-animated');
                 } else {
-                    // Pre-reserve space for elements to prevent layout shifts
-                    if (el.classList.contains('banner') || el.querySelector('.banner')) {
-                        el.style.minHeight = el.offsetHeight + 'px';
-                    }
-                    // Observe element for animation
+                    // Otherwise, observe it for animation
                     observer.observe(el);
+                }
+
+                // Pre-compute element dimensions to prevent layout shifts
+                if (el.classList.contains('banner') || el.querySelector('.banner')) {
+                    el.style.minHeight = el.offsetHeight + 'px';
                 }
             });
         });
@@ -270,11 +260,14 @@
             }, 150);
         }, { passive: true });
 
-        // When navigating away, preserve animation state
-        window.addEventListener('beforeunload', () => {
-            // Make sure session flag is set to remember we've animated elements
-            sessionStorage.setItem('stanley_animation_session', 'true');
-        });
+        // Clear sessionStorage when user completely closes the browser
+        // This is optional - uncomment if you want animations to reset on browser restart
+        // window.addEventListener('beforeunload', () => {
+        //     // Only clear if it's a tab close, not a refresh
+        //     if (performance.navigation.type !== 1) {
+        //         sessionStorage.removeItem('animationSessionId');
+        //     }
+        // });
     </script>
 
 </body>
