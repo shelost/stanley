@@ -4,6 +4,10 @@ body {
   margin: 0;
 }
 
+#main {
+  background: #19132f;
+}
+
 #splash {
   height: 90vh;
   max-height: 100%;
@@ -26,6 +30,9 @@ body {
   letter-spacing: -0.5px;
   margin: 0;
   margin-bottom: 8px;
+  background: -webkit-linear-gradient(white 50%, rgba(255, 255, 255, 0.5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 #splash .mast h2 {
   font-family: "ivypresto-text", sans-serif;
@@ -34,6 +41,9 @@ body {
   letter-spacing: -0.6px;
   margin: 0;
   color: rgba(255, 255, 255, 0.4);
+  background: -webkit-linear-gradient(rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.5));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .input {
@@ -82,7 +92,7 @@ body {
   width: 100%;
   max-width: 1080px;
   margin: 120px auto;
-  filter: drop-shadow(-4px 6px 12px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(-24px 48px 48px rgba(0, 0, 0, 0.25));
 }
 .sec.signup {
   display: flex;
@@ -130,10 +140,8 @@ body {
 }
 .sec .carousel .card .banner {
   width: 100%;
-  aspect-ratio: 4/5;
-  background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  box-shadow: -8px 36px 48px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
 .sec .carousel .card .expo {
   text-align: left;
@@ -174,13 +182,13 @@ body {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 .content .letter p {
   font-family: "ivypresto-text", sans-serif;
   font-size: 15px;
   font-weight: 100;
-  letter-spacing: -0.2px;
+  letter-spacing: -0.1px;
   width: 100%;
   text-align: left;
   margin: 0;
@@ -192,10 +200,26 @@ body {
   margin-top: 20px;
 }
 
+.pfp {
+  display: flex;
+  margin-top: -36px;
+}
+.pfp img {
+  border-radius: 50px;
+  height: 54px;
+  border: 1px solid white;
+  box-shadow: -24px 12px 24px rgba(0, 0, 0, 0.2);
+}
+.pfp #v {
+  margin-left: -12px;
+  box-shadow: -24px 12px 24px rgba(0, 0, 0, 0.4);
+}
+
 .footer {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 20px;
+  background: #060422;
+  padding: 20px 0 28px 0;
   text-align: center;
+  border-radius: 18px 18px 0 0;
 }
 .footer p {
   font-family: "ivypresto-text", sans-serif;

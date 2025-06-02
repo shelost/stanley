@@ -14,7 +14,7 @@
 </head>
 <body>
 
-
+    <div id  = 'main'>
     <div id = 'splash'>
         <div class = 'mast' data-float="fade-up" data-delay="0">
             <img id = 'stanley' src = 'assets/stanley-fade.png' alt = 'Stanley Logo' />
@@ -63,7 +63,7 @@
             </div>
 
             <div class = 'card' data-float="fade-up" data-delay="400">
-                <img src = 'assets/card-3.png' class = 'banner' alt = 'Delivers Daily' />
+                <lottie-player src="assets/card-3.json" background="transparent" speed="1" class="banner" loop autoplay></lottie-player>
                 <div class = 'expo'>
                     <h1> Delivers Daily  </h1>
                     <p>
@@ -105,6 +105,11 @@
                     Our Promise to You: Stanley is just in beta for right now, and we are going to massively improve it for you over the next 6 months to be the most thought partner you could ask for. This is your chance to get in at the early ground, and help us shape the product to be hand-in-glove perfect for you!
                 </p>
                 <img src = 'assets/signatures.png' id = 'signature' alt = 'Signature' />
+
+                <div class = 'pfp'>
+                    <img src = 'assets/john.jpeg' id = 'j' alt = 'John' />
+                    <img src = 'assets/vitalii.jpeg' id = 'v' alt = 'Vitalii' />
+                </div>
             </div>
         </div>
 
@@ -126,6 +131,7 @@
     <div class = 'footer'>
         <p> Copyright 2025 FindCommunity, Inc. All rights reserved. </p>
     </div>
+</div>
 
     <script>
         // Intersection Observer for floating animations
@@ -177,6 +183,12 @@
             clearTimeout(scrollTimer);
             if (!document.body.classList.contains('disable-hover')) {
                 document.body.classList.add('disable-hover');
+            }
+
+            if (window.scrollY > 300){
+                document.body.style.backgroundColor = '#060422';
+            } else {
+                document.body.style.backgroundColor = '#19132f';
             }
 
             scrollTimer = setTimeout(() => {

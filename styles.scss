@@ -5,6 +5,10 @@ body{
     margin: 0;
 }
 
+#main{
+    background: #19132f;
+}
+
 
 #splash{
     height: 90vh;
@@ -31,6 +35,10 @@ body{
             // /text-shadow: -1px 0 0 white;
             margin: 0;
             margin-bottom: 8px;
+
+            background: -webkit-linear-gradient(white 50%, rgba(white, .5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         h2{
             font-family: "ivypresto-text", sans-serif;
@@ -39,6 +47,11 @@ body{
             letter-spacing: -.6px;
             margin: 0;
             color: rgba(white, .4);
+
+            background: -webkit-linear-gradient(rgba(white, .8) 50%, rgba(white, .5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
         }
     }
 
@@ -90,7 +103,7 @@ body{
     width: 100%;
     max-width: 1080px;
     margin: 120px auto;
-    filter: drop-shadow(-4px 6px 12px rgba(black, .5));
+    filter: drop-shadow(-24px 48px 48px rgba(black, .25));
 
     &.signup{
         // /height: 300px;
@@ -148,10 +161,11 @@ body{
 
             .banner{
                 width: 100%;
-                aspect-ratio: 4/5;
-                background: rgba(white, .05);
+               // aspect-ratio: 4/5;
+                //background: rgba(white, .05);
                 border-radius: 12px;
-                box-shadow: -8px 36px 48px rgba(black, .3);
+                //box-shadow: -16px 100px 48px rgba(black, .1);
+                overflow: hidden;
             }
 
             .expo{
@@ -199,13 +213,13 @@ body{
         align-items: flex-start;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 18px;
 
         p{
             font-family: "ivypresto-text", sans-serif;
             font-size: 15px;
             font-weight: 100;
-            letter-spacing: -.2px;
+            letter-spacing: -.1px;
             width: 100%;
             text-align: left;
             margin: 0;
@@ -220,10 +234,26 @@ body{
     }
 }
 
+.pfp{
+    display: flex;
+    margin-top: -36px;
+    img{
+        border-radius: 50px;
+        height: 54px;
+        border: 1px solid white;
+        box-shadow: -24px 12px 24px rgba(black, .2);
+    }
+    #v{
+        margin-left: -12px;
+        box-shadow: -24px 12px 24px rgba(black, .4);
+    }
+}
+
 .footer{
-    background: rgba(black, .5);
-    padding: 20px;
+    background: #060422;
+    padding: 20px 0 28px 0;
     text-align: center;
+    border-radius: 18px 18px 0 0;
     p{
         font-family: "ivypresto-text", sans-serif;
         font-size: 14px;
