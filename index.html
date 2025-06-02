@@ -145,16 +145,29 @@
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                // Only animate if element is intersecting AND hasn't been marked for animation
-                if (entry.isIntersecting && !entry.target.hasAttribute('data-animated')) {
-                    // Immediately mark as animated to prevent re-triggering
-                    entry.target.setAttribute('data-animated', 'true');
+                const elementId = entry.target.id || `el-${Math.random().toString(36).substr(2, 9)}`;
 
-                    // Stop observing immediately to prevent any further triggers
+                // If element doesn't have an ID, assign one so we can track it
+                if (!entry.target.id) {
+                    entry.target.id = elementId;
+                }
+
+                // Check sessionStorage and data-animated attribute
+                const hasAnimated = sessionStorage.getItem(`animated-${elementId}`) === 'true' ||
+                                    entry.target.hasAttribute('data-animated');
+
+                // Only animate if element is intersecting AND hasn't been animated this session
+                if (entry.isIntersecting && !hasAnimated) {
+                    // Mark as animated in both DOM and sessionStorage
+                    entry.target.setAttribute('data-animated', 'true');
+                    sessionStorage.setItem(`animated-${elementId}`, 'true');
+
+                    // Stop observing immediately to prevent re-triggering
                     observer.unobserve(entry.target);
 
                     const delay = entry.target.getAttribute('data-delay') || 0;
 
+                    // Apply animation class after the delay
                     setTimeout(() => {
                         entry.target.classList.add('float-in');
                     }, parseInt(delay));
@@ -164,8 +177,26 @@
 
         // Observe all elements with data-float attribute
         document.addEventListener('DOMContentLoaded', () => {
+            // Check if this is the first page load in this session
+            const isFirstLoad = !sessionStorage.getItem('page-visited');
+
+            // If user is returning to the page in the same session, mark it
+            if (!isFirstLoad) {
+                document.body.classList.add('returning-visitor');
+            } else {
+                // Mark that page has been visited this session
+                sessionStorage.setItem('page-visited', 'true');
+            }
+
             const floatElements = document.querySelectorAll('[data-float]');
             floatElements.forEach(el => {
+                // Pre-compute element dimensions before animation starts
+                // to prevent layout shifts
+                if (el.classList.contains('banner') || el.querySelector('.banner')) {
+                    // Reserve space for banners
+                    el.style.minHeight = el.offsetHeight + 'px';
+                }
+
                 observer.observe(el);
             });
         });
@@ -191,13 +222,19 @@
             if (window.scrollY > 300){
                 document.body.style.backgroundColor = '#060422';
             } else {
-                document.body.style.backgroundColor = '#19132f';
+                document.body.style.backgroundColor = '#140f26';
             }
 
             scrollTimer = setTimeout(() => {
                 document.body.classList.remove('disable-hover');
             }, 150);
         }, { passive: true });
+
+        // Clear animation sessionStorage when user leaves the site
+        window.addEventListener('beforeunload', () => {
+            // Uncomment the next line if you want animations to play again on a new session
+            // Array.from(sessionStorage).forEach(key => key.startsWith('animated-') && sessionStorage.removeItem(key));
+        });
     </script>
 
 </body>

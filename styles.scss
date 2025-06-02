@@ -1,5 +1,5 @@
 body{
-    background: #19132f;
+    background: #120e22;
     color: white;
     margin: 0;
 
@@ -11,7 +11,7 @@ body{
 }
 
 #main{
-    background: #19132f;
+    background: #140f26;
 }
 
 
@@ -339,6 +339,10 @@ body{
     transform: translateY(30px);
     will-change: transform, opacity;
     backface-visibility: hidden;
+    // Content-visibility improves rendering performance
+    content-visibility: auto;
+    // Create containing block to avoid layout shifts
+    contain: layout paint style;
 
     &[data-float="fade-left"] {
         transform: translateX(-30px);
@@ -361,6 +365,13 @@ body{
             animation: fadeInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
     }
+}
+
+// For returning visitors, show elements immediately without animation
+.returning-visitor [data-float] {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
 }
 
 // Stanley logo continuous float
@@ -391,7 +402,28 @@ body{
     }
 }
 
+// Handle animation and layout for mobile
 @media screen and (max-width: 800px) {
+    // Optimize animations for mobile
+    [data-float] {
+        // Simplify animations on mobile for better performance
+        &.float-in {
+            animation-duration: 0.6s;
+            animation-timing-function: ease-out;
+        }
+    }
+
+    // Prevent animation-related scroll jank on mobile
+    html, body {
+        overflow-anchor: auto;
+    }
+
+    // Ensure fixed positioning doesn't cause layout issues
+    .sec .carousel .card .banner,
+    .sec .carousel .card lottie-player.banner {
+        height: auto;
+        min-height: 200px;
+    }
 
     #splash{
         padding-bottom: 0px;

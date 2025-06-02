@@ -1,5 +1,5 @@
 body {
-  background: #19132f;
+  background: #120e22;
   color: white;
   margin: 0;
 }
@@ -15,7 +15,7 @@ body {
 }
 
 #main {
-  background: #19132f;
+  background: #140f26;
 }
 
 #splash {
@@ -302,6 +302,8 @@ body {
   transform: translateY(30px);
   will-change: transform, opacity;
   backface-visibility: hidden;
+  content-visibility: auto;
+  contain: layout paint style;
 }
 [data-float][data-float=fade-left] {
   transform: translateX(-30px);
@@ -318,6 +320,12 @@ body {
 }
 [data-float].float-in[data-float=fade-right] {
   animation: fadeInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.returning-visitor [data-float] {
+  opacity: 1;
+  transform: none;
+  animation: none !important;
 }
 
 #stanley {
@@ -344,6 +352,18 @@ body {
 }
 
 @media screen and (max-width: 800px) {
+  [data-float].float-in {
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+  }
+  html, body {
+    overflow-anchor: auto;
+  }
+  .sec .carousel .card .banner,
+  .sec .carousel .card lottie-player.banner {
+    height: auto;
+    min-height: 200px;
+  }
   #splash {
     padding-bottom: 0px;
   }
