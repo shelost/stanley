@@ -167,6 +167,7 @@ body {
 .sec .carousel .card .banner,
 .sec .carousel .card lottie-player.banner {
   width: 100%;
+  aspect-ratio: 0.85;
   border-radius: 12px;
   box-shadow: -8px 36px 48px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -201,6 +202,7 @@ body {
 .content #linkedin {
   flex: 1;
   width: 500px;
+  aspect-ratio: 0.95;
   max-width: 45%;
   height: -moz-fit-content;
   height: fit-content;
@@ -362,7 +364,6 @@ body {
   .sec .carousel .card .banner,
   .sec .carousel .card lottie-player.banner {
     height: auto;
-    min-height: 200px;
   }
   #splash {
     padding-bottom: 0px;
@@ -425,5 +426,9 @@ body {
   }
   .input button {
     padding: 14px 0;
+  }
+  .sec .carousel .card .banner,
+  .sec .carousel .card lottie-player.banner {
+    height: auto;
   }
 }/*# sourceMappingURL=styles.css.map */

@@ -187,6 +187,7 @@ body{
             .banner,
             lottie-player.banner {
                 width: 100%;
+                aspect-ratio: .85;
                 border-radius: 12px;
                 box-shadow: -8px 36px 48px rgba(black, .1);
                 overflow: hidden;
@@ -228,6 +229,7 @@ body{
     #linkedin{
         flex: 1;
         width: 500px;
+        aspect-ratio: .95;
         max-width: 45%;
         height: fit-content;
     }
@@ -421,7 +423,6 @@ body{
     .sec .carousel .card .banner,
     .sec .carousel .card lottie-player.banner {
         height: auto;
-        min-height: 200px;
     }
 
     #splash{
@@ -501,4 +502,28 @@ body{
         }
     }
 
+    [data-float] {
+        // Ensure elements that might cause shifts have some reserved space
+        // This is a general fallback. Specific elements might need more tailored rules.
+        // For banners, the aspect-ratio above should handle it.
+        // For other [data-float] elements, if they contain images or dynamic content,
+        // consider adding min-height or aspect-ratio here too if shifts are observed.
+        // For example:
+        // &.some-specific-shifting-element-on-mobile {
+        //    min-height: 100px; // Example value
+        // }
+    }
+
+    // Ensure fixed positioning doesn't cause layout issues from a previous change
+    // The .banner, lottie-player.banner rule from before might have been too broad if it set a fixed min-height.
+    // The aspect-ratio approach is generally better for responsive banners.
+    // Removing the fixed min-height here if aspect-ratio handles it, or adjusting as needed.
+    .sec .carousel .card .banner,
+    .sec .carousel .card lottie-player.banner {
+        // The aspect-ratio from the main rule should define height relative to width.
+        // If a specific min-height is still needed on mobile, it can be set here,
+        // but el.style.minHeight = el.offsetHeight + 'px'; from JS should be more precise.
+        // min-height: 150px; // Example: if a smaller minimum is desired on mobile than what aspect-ratio might yield at small widths.
+        height: auto; // Ensure aspect-ratio can work; this was in your previous mobile CSS.
+    }
 }
