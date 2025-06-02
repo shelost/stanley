@@ -165,7 +165,7 @@ body {
   gap: 32px;
 }
 .sec .carousel .card .banner,
-.sec .carousel .card lottie-player.banner {
+.sec .carousel .card dotlottie-player.banner {
   width: 100%;
   aspect-ratio: 0.85;
   border-radius: 12px;
@@ -362,7 +362,7 @@ body {
     overflow-anchor: auto;
   }
   .sec .carousel .card .banner,
-  .sec .carousel .card lottie-player.banner {
+  .sec .carousel .card dotlottie-player.banner {
     height: auto;
   }
   #splash {
@@ -428,7 +428,7 @@ body {
     padding: 14px 0;
   }
   .sec .carousel .card .banner,
-  .sec .carousel .card lottie-player.banner {
+  .sec .carousel .card dotlottie-player.banner {
     height: auto;
   }
 }/*# sourceMappingURL=styles.css.map */

@@ -185,7 +185,7 @@ body{
             gap: 32px;
 
             .banner,
-            lottie-player.banner {
+            dotlottie-player.banner {
                 width: 100%;
                 aspect-ratio: .85;
                 border-radius: 12px;
@@ -421,7 +421,7 @@ body{
 
     // Ensure fixed positioning doesn't cause layout issues
     .sec .carousel .card .banner,
-    .sec .carousel .card lottie-player.banner {
+    .sec .carousel .card dotlottie-player.banner {
         height: auto;
     }
 
@@ -519,7 +519,7 @@ body{
     // The aspect-ratio approach is generally better for responsive banners.
     // Removing the fixed min-height here if aspect-ratio handles it, or adjusting as needed.
     .sec .carousel .card .banner,
-    .sec .carousel .card lottie-player.banner {
+    .sec .carousel .card dotlottie-player.banner {
         // The aspect-ratio from the main rule should define height relative to width.
         // If a specific min-height is still needed on mobile, it can be set here,
         // but el.style.minHeight = el.offsetHeight + 'px'; from JS should be more precise.
