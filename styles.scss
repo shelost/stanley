@@ -1,4 +1,3 @@
-
 body{
     background: #19132f;
     color: white;
@@ -20,7 +19,7 @@ body{
     text-align: center;
     gap: 48px;
     box-sizing: border-box;
-    padding-bottom: 40px;
+
 
 
     .mast{
@@ -64,19 +63,19 @@ body{
     border-radius: 48px;
     width: 480px;
     display: flex;
-    box-shadow: -8px 36px 48px rgba(black, .3);
     margin: 0 auto;
+    box-shadow: inset -2px -2px 4px rgba(black, .05), inset 2px 2px 4px rgba(white, .02),  -8px 36px 48px rgba(black, .15);
 
     input{
         border: none;
         background: none;
         flex: 1;
         color: white;
-        padding: 4px 12px;
+        padding: 4px 16px;
         font-family: "Inter", sans-serif;
         font-size: 15px;
-        font-weight: 400;
-        letter-spacing: -.4px;
+        font-weight: 350;
+        letter-spacing: -.3px;
         &::placeholder{
             color: rgba(white, .3);
         }
@@ -94,14 +93,30 @@ body{
         font-weight: 450;
         letter-spacing: -.3px;
         border-radius: 48px;
-        padding: 10px 16px 10px 16px;
+        padding: 11px 15px 12px 18px;
+        box-shadow: inset -2px -2px 4px rgba(black, .25), inset 2px 2px 4px rgba(white, .15);
+        cursor: pointer;
+        transition: .2s ease;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+
+        img{
+            height: 14px;
+        }
+        &:hover{
+            background: #5545e0;
+            gap: 8px;
+        }
     }
 }
 
 .sec{
     text-align: center;
     width: 100%;
-    max-width: 1080px;
+    max-width: 1000px;
     margin: 120px auto;
     filter: drop-shadow(-24px 48px 48px rgba(black, .25));
 
@@ -129,12 +144,16 @@ body{
             //text-shadow: -.25px 0 0 white;
             margin: 0;
             margin-bottom: 8px;
+
+            background: -webkit-linear-gradient(white 60%, rgba(white, .4));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         h2{
             font-family: "ivypresto-text", sans-serif;
             font-size: 16px;
             font-weight: 100;
-            letter-spacing: -.4px;
+            letter-spacing: -.25px;
             margin: 0 auto;
             color: rgba(white, .5);
             width: 440px;
@@ -159,12 +178,11 @@ body{
             justify-content: center;
             gap: 32px;
 
-            .banner{
+            .banner,
+            lottie-player.banner {
                 width: 100%;
-               // aspect-ratio: 4/5;
-                //background: rgba(white, .05);
                 border-radius: 12px;
-                //box-shadow: -16px 100px 48px rgba(black, .1);
+                box-shadow: -8px 36px 48px rgba(black, .1);
                 overflow: hidden;
             }
 
@@ -224,6 +242,7 @@ body{
             text-align: left;
             margin: 0;
             color: rgba(white, .75);
+
         }
 
         #signature{
@@ -264,15 +283,121 @@ body{
     }
 }
 
+/* Animation Styles */
+// Keyframe definitions
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes subtleFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+// Initial states for animated elements
+[data-float] {
+    opacity: 0;
+    transform: translateY(30px);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+
+    &[data-float="fade-left"] {
+        transform: translateX(-30px);
+    }
+
+    &[data-float="fade-right"] {
+        transform: translateX(30px);
+    }
+
+    // Animation classes applied via JavaScript
+    &.float-in {
+        opacity: 1;
+        animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+
+        &[data-float="fade-left"] {
+            animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        &[data-float="fade-right"] {
+            animation: fadeInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+    }
+}
+
+// Stanley logo continuous float
+#stanley {
+    animation: subtleFloat 6s ease-in-out infinite;
+}
+
+// Card hover effects
+.card.float-in {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    &:hover {
+        transform: translateY(-8px);
+    }
+}
+
+// Utility classes for animation handling
+.resize-animation-stopper * {
+    animation: none !important;
+    transition: none !important;
+}
+
+.disable-hover {
+    pointer-events: none;
+
+    &, &:hover {
+        pointer-events: none !important;
+    }
+}
 
 @media screen and (max-width: 800px) {
 
     #splash{
+        padding-bottom: 0px;
+
         .mast{
             width: 90vw;
+            img{
+                height: 140px;
+            }
             h1{
                 line-height: 80%;
-                margin-bottom: 18px;
+                padding-bottom: 22px;
             }
         }
     }

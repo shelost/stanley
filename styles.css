@@ -18,7 +18,6 @@ body {
   text-align: center;
   gap: 48px;
   box-sizing: border-box;
-  padding-bottom: 40px;
 }
 #splash .mast img {
   height: 180px;
@@ -52,19 +51,19 @@ body {
   border-radius: 48px;
   width: 480px;
   display: flex;
-  box-shadow: -8px 36px 48px rgba(0, 0, 0, 0.3);
   margin: 0 auto;
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.05), inset 2px 2px 4px rgba(255, 255, 255, 0.02), -8px 36px 48px rgba(0, 0, 0, 0.15);
 }
 .input input {
   border: none;
   background: none;
   flex: 1;
   color: white;
-  padding: 4px 12px;
+  padding: 4px 16px;
   font-family: "Inter", sans-serif;
   font-size: 15px;
-  font-weight: 400;
-  letter-spacing: -0.4px;
+  font-weight: 350;
+  letter-spacing: -0.3px;
 }
 .input input::-moz-placeholder {
   color: rgba(255, 255, 255, 0.3);
@@ -84,13 +83,27 @@ body {
   font-weight: 450;
   letter-spacing: -0.3px;
   border-radius: 48px;
-  padding: 10px 16px 10px 16px;
+  padding: 11px 15px 12px 18px;
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.25), inset 2px 2px 4px rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.input button img {
+  height: 14px;
+}
+.input button:hover {
+  background: #5545e0;
+  gap: 8px;
 }
 
 .sec {
   text-align: center;
   width: 100%;
-  max-width: 1080px;
+  max-width: 1000px;
   margin: 120px auto;
   filter: drop-shadow(-24px 48px 48px rgba(0, 0, 0, 0.25));
 }
@@ -112,12 +125,15 @@ body {
   font-weight: 500;
   margin: 0;
   margin-bottom: 8px;
+  background: -webkit-linear-gradient(white 60%, rgba(255, 255, 255, 0.4));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .sec .header h2 {
   font-family: "ivypresto-text", sans-serif;
   font-size: 16px;
   font-weight: 100;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.25px;
   margin: 0 auto;
   color: rgba(255, 255, 255, 0.5);
   width: 440px;
@@ -138,9 +154,11 @@ body {
   justify-content: center;
   gap: 32px;
 }
-.sec .carousel .card .banner {
+.sec .carousel .card .banner,
+.sec .carousel .card lottie-player.banner {
   width: 100%;
   border-radius: 12px;
+  box-shadow: -8px 36px 48px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 .sec .carousel .card .expo {
@@ -230,13 +248,104 @@ body {
   color: rgba(255, 255, 255, 0.4);
 }
 
+/* Animation Styles */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+[data-float] {
+  opacity: 0;
+  transform: translateY(30px);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+[data-float][data-float=fade-left] {
+  transform: translateX(-30px);
+}
+[data-float][data-float=fade-right] {
+  transform: translateX(30px);
+}
+[data-float].float-in {
+  opacity: 1;
+  animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+[data-float].float-in[data-float=fade-left] {
+  animation: fadeInLeft 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+[data-float].float-in[data-float=fade-right] {
+  animation: fadeInRight 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+#stanley {
+  animation: subtleFloat 6s ease-in-out infinite;
+}
+
+.card.float-in {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.card.float-in:hover {
+  transform: translateY(-8px);
+}
+
+.resize-animation-stopper * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.disable-hover {
+  pointer-events: none;
+}
+.disable-hover, .disable-hover:hover {
+  pointer-events: none !important;
+}
+
 @media screen and (max-width: 800px) {
+  #splash {
+    padding-bottom: 0px;
+  }
   #splash .mast {
     width: 90vw;
   }
+  #splash .mast img {
+    height: 140px;
+  }
   #splash .mast h1 {
     line-height: 80%;
-    margin-bottom: 18px;
+    padding-bottom: 22px;
   }
   .sec {
     width: 80vw;
