@@ -4,6 +4,16 @@ body {
   margin: 0;
 }
 
+::-moz-selection {
+  background: white;
+  color: black;
+}
+
+::selection {
+  background: white;
+  color: black;
+}
+
 #main {
   background: #19132f;
 }
