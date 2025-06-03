@@ -172,7 +172,7 @@ $text: #030025;
             font-weight: 300;
             letter-spacing: -.3px;
             margin: 0 auto;
-            color: rgba($text, .6);
+            color: rgba($text, .8);
             width: 440px;
             max-width: 100%;
             b{
@@ -197,7 +197,7 @@ $text: #030025;
             align-items: center;
             justify-content: center;
             gap: 18px;
-            filter: drop-shadow(-12px 12px 24px rgba($text, .25));
+            //filter: drop-shadow(-12px 12px 24px rgba($text, .25));
 
             .banner,
             dotlottie-player.banner {
@@ -226,7 +226,7 @@ $text: #030025;
                     font-weight: 300;
                     letter-spacing: -.25px;
                     margin: 0;
-                    color: rgba($text, .6);
+                    color: rgba($text, .8);
                     b{
                         font-weight: 600;
                     }
@@ -271,7 +271,10 @@ $text: #030025;
             width: 100%;
             text-align: left;
             margin: 0;
-            color: rgba($text, .75);
+            color: rgba($text, .9);
+            b{
+                font-weight: 600;
+            }
         }
 
         #signature{
